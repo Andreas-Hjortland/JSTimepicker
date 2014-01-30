@@ -21,5 +21,4 @@ TODO: This isn't done yet.
 
 License
 =======
-MIT
-
+[MIT](https://raw.github.com/AndreasHjortland/JSTimepicker/master/LICENSE)
