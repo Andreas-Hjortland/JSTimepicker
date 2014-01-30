@@ -1,0 +1,237 @@
+// Color scheme
+//@main-bg: #333333;
+@main-bg: #EEEEEE;
+@dial-bg: lighten(@main-bg, 25%);
+@digital-bg: @dial-bg;
+@bottom-bg: @dial-bg;
+
+@dial-font-color: #606060;
+@digital-font-color: #606060;
+@bottom-font-color: #333333;
+
+@highlight-color : #BBFFCC;
+@active-color : @highlight-color; 
+
+@main-border: #555555;
+@inner-border: darken(@main-bg, 25%);
+
+// Shadow
+@shadow: 5px 5px 5px #888888;
+
+// Sizing
+@dial-radius:    100px; // How large should the dial be?
+@digital-height:  50px; // How large should the digital clock be?
+@bottom-height:   50px; // How large should the confirm/abort button be?
+@dial-margin:     10px; // How much margin should we have around the dial?
+
+// These should probably not be messed with
+@dial-text-size:  @dial-radius / 8; // How large should the font in the dial be?
+@outer-num: @dial-radius - @dial-text-size;
+@inner-num: @outer-num - (@dial-text-size * 2);
+
+// 2px for the border (1px on each side)
+@totalheight: 2px + @digital-height + @bottom-height + ((@dial-margin + @dial-radius)*2);
+@totalwidth : 2px + (@dial-radius + @dial-margin)*2;
+
+// Mixins
+.min (@a; @b) when (@a < @b) { font-size: @a }
+.min (@a; @b) when (@a > @b) { font-size: @b }
+.darkOrLight(@a) when (lightness(@a) <  50%) { color : lighten(@highlight-color,50%) }
+.darkOrLight(@a) when (lightness(@a) >= 50%) { color : darken(@highlight-color, 50%) }
+.transform(@a) { transform : @a; -webkit-transform : @a }
+
+// CSS
+.timepicker {
+	display : none;
+	position : relative;
+	//display : block;
+	width : @totalwidth;
+	height : @totalheight;
+	border : 1px solid @main-border;
+	background-color : @main-bg;
+	box-shadow : @shadow;
+	overflow : hidden;
+
+}
+
+.timepicker .active {
+	.darkOrLight(@main-bg);
+}
+
+.timepicker .digital {
+	width: 100%;
+	color: @digital-font-color;
+	height : @digital-height;
+	background-color : @digital-bg;
+	.min(@digital-height - 5px, ceil(@totalwidth / 3));
+	line-height : @digital-height;
+	text-align : center;
+}
+
+.timepicker .digital small {
+	font-size : 50%;
+	font-weight : bold;
+}
+
+.timepicker .bottom {
+	background-color : @bottom-bg;
+	border-top : 1px solid @inner-border;
+	color: @bottom-font-color;
+	width : 100%;
+	height : @bottom-height;
+	text-align : center;
+	font-weight : bold;
+	line-height : @bottom-height;
+}
+
+.timepicker .bottom button {
+	position : absolute;
+	display : inline-block;
+	width : 50%;
+	height : @bottom-height;
+	color : @bottom-font-color;
+	background-color : @bottom-bg;
+	border : none;
+}
+
+.timepicker .bottom button.abort {
+	left : 0;
+	border-right : 1px solid @inner-border;
+}
+.timepicker .bottom button.back {
+	left : 0;
+	border-right : 1px solid @inner-border;
+	display : none;
+}
+
+.timepicker .bottom button.confirm {
+	right : 0;
+	border-left : 1px solid @inner-border;
+	display : none;
+}
+.timepicker .bottom button.next {
+	right : 0;
+	border-left : 1px solid @inner-border;
+}
+
+.timepicker .ampm {
+	text-align : center;
+	font-weight : bold;
+	color : @dial-font-color;
+}
+
+.timepicker .ampm > * {
+	position : absolute;
+	bottom : @bottom-height + (@dial-margin / 2);
+	width : @dial-text-size * 3;
+	height : @dial-text-size * 3;
+	font-size : @dial-text-size;
+	line-height : @dial-text-size * 3;
+	background-color : @dial-bg;
+	border-radius : 50%;
+}
+
+.timepicker .selected {
+	background-color : @highlight-color;
+}
+
+.timepicker .ampm > *:hover {
+	cursor : pointer;
+	background-color : @highlight-color;
+}
+
+.timepicker .am {
+	left : @dial-margin / 2;
+}
+
+.timepicker .pm {
+	right : @dial-margin / 2;
+}
+
+.timepicker .dial {
+	margin : @dial-margin auto;
+	width : @dial-radius*2;
+	height : @dial-radius*2;
+	border-radius : 50%;
+	background-color : @dial-bg;
+}
+
+.timepicker .dial .digits {
+	width : 100%;
+	height : 100%;
+}
+
+.timepicker .dial .digits[class*=hours-] {
+	//display : none;
+}
+
+.timepicker .dial .digits.minutes {
+	display : none;
+}
+
+.timepicker .dial .digits.clock-hand {
+	position : absolute;
+	transform-origin : center 0;
+	-webkit-transform-origin : center 0;
+	width : 2px;
+	background-color : @highlight-color;
+	top : @dial-radius + @digital-height + @dial-margin;
+	left : 0;
+	right : 0;
+	margin : 0 auto;
+	display : none;
+	//transform : rotate(-150deg);
+}
+.timepicker .dial .digits.clock-hand.outer {
+	height : @outer-num;
+}
+
+.timepicker .dial .digits.clock-hand.inner {
+	height : @inner-num;
+}
+
+.timepicker .active {
+	background-color : @highlight-color;
+}
+
+.timepicker .dial .digits div {
+	font-size : @dial-text-size;
+	color : @dial-font-color;
+	position : absolute;
+	list-style : none;
+	display : block;
+	right : 0;
+	left : 0;
+	top : @dial-radius + @digital-height + @dial-margin - @dial-text-size;
+	font-weight : bold;
+	margin : 0 auto;
+	width : @dial-text-size * 2;
+	height : @dial-text-size * 2;
+	line-height : 2em;
+	display : block;
+	text-align : center;
+	margin-left : auto;
+	margin-right : auto;
+	border-radius : 50%;
+}
+
+.timepicker .dial .digits div.digit:hover {
+	background: @active-color;
+	cursor : pointer;
+}
+
+.dialLoop (@diameter; @selector; @index; @startDegree) when (@index > 0) {
+
+	@{selector}:nth-child(@{index}) {
+		.transform(translate(@diameter*cos(@startDegree), @diameter*sin(@startDegree)));
+	}
+
+	// next iteration
+	.dialLoop(@diameter, @selector, @index - 1, @startDegree - 30deg);
+}
+.dialLoop (@diameter; @selector; 0; @startDegree) {}
+
+// Outer numbers
+.dialLoop(@outer-num, ~".timepicker .dial .digits.hours-low div", 12, 270deg);
+.dialLoop(@inner-num, ~".timepicker .dial .digits.hours-high div", 12, 270deg);
+.dialLoop(@outer-num, ~".timepicker .dial .digits.minutes div", 12, 270deg);
