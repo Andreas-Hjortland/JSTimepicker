@@ -9,7 +9,7 @@ This is an effort to recreate the timepicker which is used on the standard calen
 
 Usage
 =====
-As of now this is in the prototyping stage, so I wouldn't recommend anyone to use it quite yet, but if you want to use it, you have to copy the node div.timepicker (with all the subnodes of course) from the html and bind it to the input field like this (you can use another selector if you want.. You get the idea)
+As of now this is in the prototyping stage, so I wouldn't recommend anyone to use it quite yet, but if you want to use it, you have to host the less file (possibly compiled, else with lessjs), and copy the node div.timepicker (with all the subnodes of course) from the timepicker.html file and bind it to the input field like this (you can use another selector if you want.. You get the idea).
 
     $('input[type=time]').timepicker();
 
