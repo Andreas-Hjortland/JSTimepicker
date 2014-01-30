@@ -5,7 +5,7 @@ Screenshot
 
 Description
 ============
-This is an effort to recreate the timepicker which is used on the standard calendar for android devices.
+This is an effort to recreate the timepicker which is used on the standard calendar for android devices in html + javascript.
 
 Usage
 =====
