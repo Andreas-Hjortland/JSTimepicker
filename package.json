@@ -1,7 +1,7 @@
 {
 	"name": "JSTimepicker",
 	"description": "A reimplementation of the Android timepicker in javascript",
-	"keywords":  ["timepicker"],
+	"keywords": ["timepicker"],
 	"homepage": "https://github.com/AndreasHjortland/JSTimepicker",
 	"bugs": {
 		"url": "https://github.com/AndreasHjortland/JSTimepicker/issues"
@@ -18,12 +18,9 @@
 		"grunt-contrib-less": "~0.11.1",
 		"grunt-contrib-clean": "~0.5.0",
 		"grunt-contrib-watch": "~0.5.0",
-		"grunt-contrib-handlebars": "~0.8.0",
 		"grunt-contrib-watch": "~0.6.1",
-		"grunt-contrib-jshint": "~0.10.0"
-	},
-	"dependencies": {
-		"jquery": "*"
+		"grunt-contrib-jshint": "~0.10.0",
+		"grunt-dot-compiler": "~0.5.12"
 	},
 	"private": true
 }
